@@ -31,6 +31,13 @@ public class SimpleElementMatcher {
     }
 
     @Nonnull
+    public SimpleElementMatcher isNotVisible() {
+        flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.isDisplayed())
+                .isFalse());
+        return this;
+    }
+
+    @Nonnull
     public SimpleElementMatcher hasText(@Nullable String expectedText) {
         flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
                 .isEqualTo(expectedText));

@@ -24,7 +24,7 @@ public class StoreFinderSteps {
         input.sendKeys(Keys.ENTER);
     }
 
-    @Then("Check search result")
+    @Then("Check search store finder result")
     public void checkResult() {
         assertThat(locate(".js-store-finder-pager-item-all"))
                 .hasText("45");
