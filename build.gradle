@@ -15,17 +15,16 @@ dependencies {
             "io.github.bonigarcia:webdrivermanager:5.0.2",
             "org.seleniumhq.selenium:selenium-java:4.0.0-rc-1",
             "org.apache.commons:commons-lang3:3.12.0",
-            "org.projectlombok:lombok:1.18.20",
-            'org.assertj:assertj-core:3.20.2',
+            'org.assertj:assertj-core:3.20.2'
+         )
+    testImplementation(
+            "org.aeonbits.owner:owner:1.0.12",
+            "com.github.javafaker:javafaker:1.0.2",
             "io.cucumber:cucumber-junit-platform-engine:6.11.0",
             'io.cucumber:cucumber-java8:6.11.0',
             'io.cucumber:cucumber-java:6.11.0',
             "org.junit.jupiter:junit-jupiter:$junitVersion",
-            "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
-         )
-    testImplementation(
-            "org.aeonbits.owner:owner:1.0.12",
-            "com.github.javafaker:javafaker:1.0.2")
+            "org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
     testRuntimeOnly(
             "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     )
