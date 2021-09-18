@@ -13,6 +13,7 @@ dependencies {
             "io.github.bonigarcia:webdrivermanager:5.0.2", // todo remove
             "com.codeborne:selenide:5.24.0", // todo remove
             "io.cucumber:cucumber-java8:6.10.4",
+            "io.cucumber:cucumber-java:6.10.4",
             "io.cucumber:cucumber-junit:6.10.4",
             "org.aeonbits.owner:owner:1.0.12",
             "com.github.javafaker:javafaker:1.0.2",
