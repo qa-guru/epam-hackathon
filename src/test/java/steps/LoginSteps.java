@@ -1,12 +1,14 @@
 package steps;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Selenide;
+import guru.qa.core.Core;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebElement;
 
-import static com.codeborne.selenide.Selenide.$$;
+import static guru.qa.core.Core.locate;
+import static guru.qa.core.Core.locateAll;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginSteps {
 
@@ -14,17 +16,20 @@ public class LoginSteps {
     //здесь уже непосредственно шаги кукумбера идут
 
     @Given("^Open login page")
-    public void openHomePage(){
-        Selenide.open("https://apparel-uk.local:9002/ucstorefront/en");
+    public void openHomePage() {
+        Core.open("https://apparel-uk.local:9002/ucstorefront/en");
     }
 
     @When("^Search in search field")
-    public void searchData(){
-        Selenide.$("#js-site-search-input").setValue("book").pressEnter();
+    public void searchData() {
+        WebElement searchInput = locate("#js-site-search-input");
+        searchInput.sendKeys("book");
+        locate(".js_search_button").click();
     }
 
     @Then("Check result")
-    public void gettest11(){
-        $$(".product-item").shouldHave(CollectionCondition.sizeGreaterThan(0));
+    public void gettest11() {
+        assertThat(locateAll(".product-item").size()).isGreaterThan(0);
+        Core.close();
     }
 }

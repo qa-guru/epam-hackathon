@@ -9,9 +9,13 @@ repositories {
 def junitVersion = "5.7.2"
 
 dependencies {
+    implementation(
+            "io.github.bonigarcia:webdrivermanager:5.0.2",
+            "org.seleniumhq.selenium:selenium-java:4.0.0-rc-1",
+            "org.apache.commons:commons-lang3:3.12.0",
+            "org.projectlombok:lombok:1.18.20"
+         )
     testImplementation(
-            "io.github.bonigarcia:webdrivermanager:5.0.2", // todo remove
-            "com.codeborne:selenide:5.24.0", // todo remove
             "io.cucumber:cucumber-java8:6.10.4",
             "io.cucumber:cucumber-java:6.10.4",
             "io.cucumber:cucumber-junit:6.10.4",
@@ -26,8 +30,8 @@ dependencies {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.withType(Test) {
