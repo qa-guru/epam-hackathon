@@ -1,10 +1,15 @@
 package steps;
 
+import domain.Review;
+import domain.ReviewMessage;
 import guru.qa.core.Core;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.List;
 
 import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
@@ -75,16 +80,19 @@ public class ProductSteps {
         locate("#tabreview").click();
     }
 
-    @And("^I can see write a review button")
+    @And("^Click on review button")
     public void clickReviewButton() {
         locate(".js-review-write-toggle").click();
     }
 
     @When("^Fill form")
-    public void fillForm() {
-        locate("#reviewForm [name=\"headline\"]").sendKeys("test");
-        locate("#reviewForm [name=\"comment\"]").sendKeys("test");
-        locate("#reviewForm .js-ratingIcon:nth-child(9)").click();
+    public void fillForm(DataTable data) {
+        List<Review> reviews = Review.transformFromDataTable(data);
+        Review review = reviews.get(0);
+        locate("#review\\.headline").sendKeys(review.getTitle());
+        locate("#review\\.comment").sendKeys(review.getDescription());
+        locate(String.format("#reviewForm .js-ratingIcon:nth-child(%s)",review.getRate())).click();
+        locate("#alias").sendKeys(review.getName());
     }
 
     @Then("^Submit review form")
@@ -92,9 +100,25 @@ public class ProductSteps {
         locate("#reviewForm button").click();
     }
 
-    @And("^Check alert message")
+    @And("^Check review alert message")
     public void checkAlertMessage() {
         assertThat(locate(".global-alerts .getAccAlert"))
-                .hasText("×\nThank you for your review.");
+                .containsText(ReviewMessage.SUCCESSFUL_REVIEW.getText());
+    }
+
+    @And("^Check alert error message")
+    public void checkAlertErrorMessage() {
+        assertThat(locate(".global-alerts .getAccAlert"))
+                .containsText(ReviewMessage.MANDATORY_FIELD.getText());
+    }
+
+    @And("^Check review error message")
+    public void checkErrorMessage() {
+        assertThat(locate("#headline\\.errors"))
+                .hasText(ReviewMessage.EMPTY_TITLE.getText());
+        assertThat(locate("#comment\\.errors"))
+                .hasText(ReviewMessage.EMPTY_DESCRIPTION.getText());
+        assertThat(locate("#rating\\.errors"))
+                .hasText(ReviewMessage.NO_RATE.getText());
     }
 }
