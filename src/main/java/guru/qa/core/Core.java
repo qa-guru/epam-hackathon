@@ -45,6 +45,13 @@ public class Core {
     }
 
     public static void addCookie(@Nonnull Cookie cookie) {
-        WebDriverContainer.INSTANCE.getRequiredWebDriver().manage().addCookie(cookie);
+        WebDriverContainer.INSTANCE.getRequiredWebDriver()
+                .manage()
+                .deleteCookieNamed(cookie.getName());
+
+        WebDriverContainer.INSTANCE.getRequiredWebDriver()
+                .manage()
+                .addCookie(cookie);
+
     }
 }
