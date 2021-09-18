@@ -1,5 +1,6 @@
-package guru.qa.launcher;
+package runner;
 
+import guru.qa.core.config.Config;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.engine.discovery.UniqueIdSelector;
 import org.junit.platform.launcher.Launcher;
@@ -15,12 +16,11 @@ import java.util.stream.Collectors;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectDirectory;
 
-public class RunCucumber {
+public class CucumberRunner {
+
     public static void main(String[] args) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
-                .selectors(
-                        selectDirectory("path/to/features")
-                )
+                .selectors(selectDirectory("src/test/resources/features"))
                 .build();
 
         Launcher launcher = LauncherFactory.create();
@@ -29,20 +29,19 @@ public class RunCucumber {
         launcher.execute(request);
 
         TestExecutionSummary summary = listener.getSummary();
-        // Do something with summary
 
-        List<UniqueIdSelector> failures = summary.getFailures().stream()
-                .map(TestExecutionSummary.Failure::getTestIdentifier)
-                .filter(TestIdentifier::isTest)
-                .map(TestIdentifier::getUniqueId)
-                .map(DiscoverySelectors::selectUniqueId)
-                .collect(Collectors.toList());
+        if (Config.INSTANCE.rerunFailedTests) {
+            List<UniqueIdSelector> failures = summary.getFailures().stream()
+                    .map(TestExecutionSummary.Failure::getTestIdentifier)
+                    .filter(TestIdentifier::isTest)
+                    .map(TestIdentifier::getUniqueId)
+                    .map(DiscoverySelectors::selectUniqueId)
+                    .collect(Collectors.toList());
 
-        LauncherDiscoveryRequest rerunRequest = LauncherDiscoveryRequestBuilder.request()
-                .selectors(failures)
-                .build();
-
-        launcher.execute(rerunRequest);
-        TestExecutionSummary rerunSummary = listener.getSummary();
+            LauncherDiscoveryRequest rerunRequest = LauncherDiscoveryRequestBuilder.request()
+                    .selectors(failures)
+                    .build();
+            launcher.execute(rerunRequest);
+        }
     }
 }
