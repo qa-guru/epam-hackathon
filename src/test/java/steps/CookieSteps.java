@@ -1,7 +1,5 @@
 package steps;
 
-import guru.qa.core.Core;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -9,11 +7,6 @@ import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class CookieSteps {
-    @Given("Open main page")
-    public void openMainPage() {
-        Core.open("https://apparel-uk.local:9002/ucstorefront/en");
-    }
-
     @When("See cookie message")
     public void checkCookieMessage(){
         assertThat(locate("#js-cookie-notification"))
