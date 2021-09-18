@@ -15,7 +15,7 @@ public enum SimpleElementLocator {
     INSTANCE;
 
     @Nonnull
-    public WebElement findElement(SearchContext ctx, By selector) {
+    public WebElement findElement(@Nonnull SearchContext ctx, @Nonnull By selector) {
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
@@ -28,7 +28,7 @@ public enum SimpleElementLocator {
     }
 
     @Nonnull
-    public List<WebElement> findElements(SearchContext ctx, By selector) {
+    public List<WebElement> findElements(@Nonnull SearchContext ctx, @Nonnull By selector) {
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {

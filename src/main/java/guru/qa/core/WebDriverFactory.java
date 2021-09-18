@@ -22,7 +22,7 @@ public class WebDriverFactory {
             case CHROME: {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
-                options.setExperimentalOption("prefs", prefs());
+                options.setExperimentalOption("prefs", chromePrefs());
                 options.addArguments("--no-sandbox", "--ignore-ssl-errors=yes", "--ignore-certificate-errors");
                 WebDriver driver = new ChromeDriver(options);
                 driver.manage().window().maximize();
@@ -41,7 +41,7 @@ public class WebDriverFactory {
     }
 
     @Nonnull
-    private static Map<String, Object> prefs() {
+    private static Map<String, Object> chromePrefs() {
         Map<String, Object> chromePreferences = new HashMap<>();
         chromePreferences.put("safebrowsing.enabled", true);
         chromePreferences.put("credentials_enable_service", false);
