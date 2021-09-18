@@ -10,6 +10,7 @@ import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class ProductSteps {
+
     @Given("^Open product page")
     public void openProductPage() {
         Core.open("https://apparel-uk.local:9002/ucstorefront/en/Categories/Accessories-women/Watches-women/Biarritz-Women/p/111114_black");

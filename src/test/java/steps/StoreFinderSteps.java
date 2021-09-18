@@ -11,6 +11,7 @@ import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class StoreFinderSteps {
+
     @Given("^Open store finder page")
     public void openStoreFinderPage() {
         Core.open("https://apparel-uk.local:9002/ucstorefront/en/store-finder");

@@ -37,6 +37,13 @@ public class SimpleElementMatcher {
     }
 
     @Nonnull
+    public SimpleElementMatcher hasNoText(String expectedText) {
+        flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
+                .isNotEqualTo(expectedText));
+        return this;
+    }
+
+    @Nonnull
     public SimpleElementMatcher containsText(String expectedText) {
         flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
                 .contains(expectedText));
