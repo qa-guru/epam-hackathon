@@ -1,8 +1,8 @@
 package guru.qa.core.matcher;
 
-import guru.qa.core.SimpleElement;
 import guru.qa.core.config.Config;
 import org.apache.commons.lang3.time.StopWatch;
+import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
 import java.util.function.Consumer;
@@ -11,14 +11,14 @@ import static guru.qa.core.Utils.sleep;
 
 public class SimpleElementMatcher {
 
-    private final SimpleElement matchedElement;
+    private final WebElement matchedElement;
 
-    private SimpleElementMatcher(SimpleElement matchedElement) {
+    private SimpleElementMatcher(WebElement matchedElement) {
         this.matchedElement = matchedElement;
     }
 
     @Nonnull
-    public static SimpleElementMatcher assertThat(@Nonnull SimpleElement element) {
+    public static SimpleElementMatcher assertThat(@Nonnull WebElement element) {
         return new SimpleElementMatcher(element);
     }
 
@@ -36,7 +36,14 @@ public class SimpleElementMatcher {
         return this;
     }
 
-    private void flexCheck(Consumer<SimpleElement> action) {
+    @Nonnull
+    public SimpleElementMatcher containsText(String expectedText) {
+        flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
+                .contains(expectedText));
+        return this;
+    }
+
+    private void flexCheck(Consumer<WebElement> action) {
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {

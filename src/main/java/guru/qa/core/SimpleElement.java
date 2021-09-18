@@ -39,7 +39,11 @@ public class SimpleElement implements WebElement {
     @Override
     public void sendKeys(CharSequence... keysToSend) {
         execute(webElement -> {
-            webElement.sendKeys(keysToSend);
+            if (keysToSend != null && keysToSend[0] == null) {
+                webElement.sendKeys("");
+            } else {
+                webElement.sendKeys(keysToSend);
+            }
         });
     }
 

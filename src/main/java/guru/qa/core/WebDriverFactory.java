@@ -24,11 +24,15 @@ public class WebDriverFactory {
                 ChromeOptions options = new ChromeOptions();
                 options.setExperimentalOption("prefs", prefs());
                 options.addArguments("--no-sandbox", "--ignore-ssl-errors=yes", "--ignore-certificate-errors");
-                return new ChromeDriver(options);
+                WebDriver driver = new ChromeDriver(options);
+                driver.manage().window().maximize();
+                return driver;
             }
             case FIREFOX: {
                 WebDriverManager.firefoxdriver().setup();
-                return new FirefoxDriver();
+                WebDriver driver = new FirefoxDriver();
+                driver.manage().window().maximize();
+                return driver;
             }
             default: {
                 throw new IllegalStateException("Browser not supported");
