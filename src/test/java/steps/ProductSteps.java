@@ -31,7 +31,6 @@ public class ProductSteps {
         Selenide.$(".page-details-add-to-cart-component .js-qty-selector-minus").click();
     }
 
-
     @When("^Add to bag")
     public void addToBasket(){
         Selenide.$("#addToCartButton").click();
