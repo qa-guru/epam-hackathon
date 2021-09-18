@@ -1,11 +1,11 @@
 package pages;
 
-import com.codeborne.selenide.ElementsCollection;
+import guru.qa.core.ElementList;
 import lombok.Getter;
 import pages.components.CategoryMenu;
 import pages.components.FiltersSidebar;
 
-import static com.codeborne.selenide.Selenide.$$;
+import static guru.qa.core.Core.locateAll;
 
 
 @Getter
@@ -15,7 +15,7 @@ public class CategoryPage {
 
     private FiltersSidebar filters = new FiltersSidebar();
 
-    private ElementsCollection productsGrid = $$(".product-item");
+    private ElementList productsGrid = locateAll(".product-item");
 
 
 }

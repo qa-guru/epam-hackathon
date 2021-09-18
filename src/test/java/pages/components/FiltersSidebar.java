@@ -1,22 +1,26 @@
 package pages.components;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
 import data.FiltersItem;
+import guru.qa.core.ElementList;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-import static com.codeborne.selenide.Selenide.$$;
+import static guru.qa.core.Core.locateAll;
 
 public class FiltersSidebar {
 
-    private ElementsCollection filters = $$("div.facet");
+    private ElementList filters = locateAll("div.facet");
 
     public String setFilter(FiltersItem filter, int indexFilter) {
 
-        SelenideElement filterInUse = filters.find(Condition.text(filter.getFilterName()));
-        SelenideElement filterActive = filterInUse.$$("span.facet__list__text").get(indexFilter);
+        WebElement filterInUse = filters.stream()
+                .filter(webElement -> filter.getFilterName().equals(webElement.getText().substring(0,filter.getFilterName().length())))
+                .findAny()
+                .orElse(null);
 
-        String filterActiveString = filterActive.text();
+        WebElement filterActive = filterInUse.findElements(new By.ByCssSelector("span.facet__list__text")).get(indexFilter);
+
+        String filterActiveString = filterActive.getText();
         filterActive.click();
 
         return filterActiveString;
@@ -25,10 +29,20 @@ public class FiltersSidebar {
 
     public String setFilter(FiltersItem filter, String stringFilter) {
 
-        SelenideElement filterInUse = filters.find(Condition.text(filter.getFilterName()));
-        SelenideElement filterActive = filterInUse.$$("span.facet__text").find(Condition.text(stringFilter));
+        WebElement filterInUse = filters.stream()
+                .filter(webElement -> filter.getFilterName().equals(webElement.getText().substring(0,filter.getFilterName().length())))
+                .findAny()
+                .orElse(null);
 
-        String filterActiveString = filterActive.text();
+        WebElement filterActive = filterInUse.findElements(new By.ByCssSelector("span.facet__text")).stream()
+                .filter(webElement -> stringFilter
+                        .equals(webElement
+                                .getText()
+                                .substring(0, Math.min(stringFilter.length(), webElement.getText().length())))) //stringFilter.length())))
+                .findAny()
+                .orElse(null);//find(Condition.text(stringFilter));
+
+        String filterActiveString = filterActive.getText();
         filterActive.click();
 
         return filterActiveString;
