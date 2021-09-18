@@ -45,11 +45,45 @@ Feature: Product feature
     And I can see the product code
     When Add to wishlist
 
+  Scenario: Write a review without data
+    Given Open product page
+    And I can see the product code
+    When Click on tab review
+    And Click on review button
+    Then Submit review form
+    When Click on tab review
+    And Click on review button
+    And Check review error message
+
   Scenario: Write a review
     Given Open product page
     And I can see the product code
     When Click on tab review
-    And I can see write a review button
+    And Click on review button
     When Fill form
+      | title | description | rating  | name |
+      | test  | testtest    | 9       | Test |
     Then Submit review form
-    And Check alert message
+    And Check review alert message
+
+  Scenario: Write a review without name
+    Given Open product page
+    And I can see the product code
+    When Click on tab review
+    And Click on review button
+    When Fill form
+      | title | description | rating  | name |
+      | test  | testtest    | 9       |      |
+    Then Submit review form
+    And Check review alert message
+
+  Scenario: Write a review without title
+    Given Open product page
+    And I can see the product code
+    When Click on tab review
+    And Click on review button
+    When Fill form
+      | title | description | rating  | name |
+      |       | testtest    | 9       |      |
+    Then Submit review form
+    And Check alert error message
