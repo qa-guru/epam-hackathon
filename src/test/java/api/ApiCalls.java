@@ -18,7 +18,7 @@ import static utils.CookieUtils.parseCookieList;
 public class ApiCalls {
 
     private HttpClient httpClient = HttpClientFactory.getClient();
-    private List<String> cookiesVeryNeeded;
+    private ThreadLocal<List<String>> cookiesVeryNeeded = new ThreadLocal<>();
 
 
     public void apiLogin(String email, String password) throws IOException, InterruptedException {
@@ -31,13 +31,14 @@ public class ApiCalls {
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .header("Accept", "*/*")
                 .header("Accept-Encoding", "gzip, deflate, br")
-                .header("Cookie", parseCookieList(cookiesVeryNeeded))
+                .header("Cookie", parseCookieList(cookiesVeryNeeded.get()))
                 .POST(requestBody)
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         List<String> cookies = response.headers().allValues("Set-Cookie");
         for (Cookie cookie : parseCookie(cookies)) {
+            Core.deleteCookie(cookie);
             Core.addCookie(cookie);
         }
     }
@@ -49,7 +50,7 @@ public class ApiCalls {
                 .build();
 
         HttpResponse<String> res = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        cookiesVeryNeeded = res.headers().allValues("Set-Cookie");
+        cookiesVeryNeeded.set(res.headers().allValues("Set-Cookie"));
         return StringUtils.substringBetween(res.body(), "CSRFToken = '", "'");
     }
 

@@ -2,16 +2,11 @@ package domain;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.TableTransformer;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
+
 public class Review {
     private String title;
     private String description;
@@ -41,5 +36,44 @@ public class Review {
 
             return review;
         }
+    }
+
+    public Review(String title, String description, String rate, String name) {
+        this.title = title;
+        this.description = description;
+        this.rate = rate;
+        this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
