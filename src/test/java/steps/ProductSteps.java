@@ -92,7 +92,7 @@ public class ProductSteps {
 
     @And("^Check alert message")
     public void checkAlertMessage(){
-        Selenide.$(".global-alerts .getAccAlert").shouldHave(Condition.text("×\n" +
-                "Thank you for your review."));
+        Selenide.$(".global-alerts .getAccAlert").shouldHave(
+            Condition.text("×\nThank you for your review."));
     }
 }
