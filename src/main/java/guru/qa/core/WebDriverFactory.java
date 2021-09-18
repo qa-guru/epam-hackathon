@@ -5,7 +5,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -22,15 +21,10 @@ public class WebDriverFactory {
             case CHROME: {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
-                options.setExperimentalOption("prefs", prefs());
+                options.setHeadless(Config.INSTANCE.headless);
+                options.setExperimentalOption("prefs", chromePrefs());
                 options.addArguments("--no-sandbox", "--ignore-ssl-errors=yes", "--ignore-certificate-errors");
                 WebDriver driver = new ChromeDriver(options);
-                driver.manage().window().maximize();
-                return driver;
-            }
-            case FIREFOX: {
-                WebDriverManager.firefoxdriver().setup();
-                WebDriver driver = new FirefoxDriver();
                 driver.manage().window().maximize();
                 return driver;
             }
@@ -41,7 +35,7 @@ public class WebDriverFactory {
     }
 
     @Nonnull
-    private static Map<String, Object> prefs() {
+    private static Map<String, Object> chromePrefs() {
         Map<String, Object> chromePreferences = new HashMap<>();
         chromePreferences.put("safebrowsing.enabled", true);
         chromePreferences.put("credentials_enable_service", false);

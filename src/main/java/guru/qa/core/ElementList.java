@@ -5,6 +5,8 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -230,10 +232,8 @@ public class ElementList implements List<WebElement> {
         return execute((Function<List<WebElement>, Stream<WebElement>>) List::parallelStream);
     }
 
-    private void execute(Consumer<List<WebElement>> action) {
-        if (delegate == null) {
-            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
-        }
+    private void execute(@Nonnull Consumer<List<WebElement>> action) {
+        checkDelegate();
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
@@ -246,10 +246,9 @@ public class ElementList implements List<WebElement> {
         action.accept(delegate);
     }
 
-    private <T> T execute(Function<List<WebElement>, T> action) {
-        if (delegate == null) {
-            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
-        }
+    @Nullable
+    private <T> T execute(@Nonnull Function<List<WebElement>, T> action) {
+        checkDelegate();
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
@@ -259,5 +258,11 @@ public class ElementList implements List<WebElement> {
             }
         }
         return action.apply(delegate);
+    }
+
+    private void checkDelegate() {
+        if (delegate == null) {
+            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
+        }
     }
 }

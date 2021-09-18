@@ -5,6 +5,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 import static guru.qa.core.Utils.sleep;
@@ -30,27 +31,27 @@ public class SimpleElementMatcher {
     }
 
     @Nonnull
-    public SimpleElementMatcher hasText(String expectedText) {
+    public SimpleElementMatcher hasText(@Nullable String expectedText) {
         flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
                 .isEqualTo(expectedText));
         return this;
     }
 
     @Nonnull
-    public SimpleElementMatcher hasNoText(String expectedText) {
+    public SimpleElementMatcher hasNoText(@Nullable String expectedText) {
         flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
                 .isNotEqualTo(expectedText));
         return this;
     }
 
     @Nonnull
-    public SimpleElementMatcher containsText(String expectedText) {
+    public SimpleElementMatcher containsText(@Nullable String expectedText) {
         flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
                 .contains(expectedText));
         return this;
     }
 
-    private void flexCheck(Consumer<WebElement> action) {
+    private void flexCheck(@Nonnull Consumer<WebElement> action) {
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {

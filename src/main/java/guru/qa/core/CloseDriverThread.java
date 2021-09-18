@@ -3,13 +3,14 @@ package guru.qa.core;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
+import javax.annotation.Nonnull;
 import java.util.Queue;
 
 class CloseDriverThread extends Thread {
 
     private final Queue<Thread> allWebDriverThreads;
 
-    CloseDriverThread(Queue<Thread> allWebDriverThreads) {
+    CloseDriverThread(@Nonnull Queue<Thread> allWebDriverThreads) {
         this.allWebDriverThreads = allWebDriverThreads;
         setDaemon(true);
     }
@@ -35,7 +36,7 @@ class CloseDriverThread extends Thread {
         }
     }
 
-    private void closeWebDriver(Thread thread) {
+    private void closeWebDriver(@Nonnull Thread thread) {
         allWebDriverThreads.remove(thread);
         WebDriver driver = WebDriverContainer.INSTANCE
                 .getWebDriver(thread.getId());

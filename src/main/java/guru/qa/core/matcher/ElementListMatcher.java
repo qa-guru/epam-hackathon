@@ -33,7 +33,7 @@ public class ElementListMatcher {
     }
 
     @Nonnull
-    public ElementListMatcher containsTextsInAnyOrder(String... expectedTexts) {
+    public ElementListMatcher containsTextsInAnyOrder(@Nonnull String... expectedTexts) {
         flexCheck(webElements -> Assertions.assertThat(webElements)
                 .hasSizeGreaterThan(0)
                 .extracting((Function<WebElement, String>) WebElement::getText)
@@ -41,7 +41,7 @@ public class ElementListMatcher {
         return this;
     }
 
-    private void flexCheck(Consumer<ElementList> action) {
+    private void flexCheck(@Nonnull Consumer<ElementList> action) {
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {

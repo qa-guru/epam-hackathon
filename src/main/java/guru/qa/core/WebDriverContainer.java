@@ -9,16 +9,15 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.lang.Thread.currentThread;
 
 public enum WebDriverContainer {
     INSTANCE;
 
-    private final Map<Long, WebDriver> webDriverHolder = new ConcurrentHashMap<>(4);
-    private final Queue<Thread> allWebDriverThreads = new ConcurrentLinkedQueue<>();
-    private final AtomicBoolean cleanupThreadStarted = new AtomicBoolean(false);
+    private final Map<Long, WebDriver> webDriverHolder = new ConcurrentHashMap<>();
+    private final Queue<Thread> allDriverThreads = new ConcurrentLinkedQueue<>();
+    private volatile boolean cleanupThreadStarted = false;
 
     /**
      * @throws IllegalStateException if webdriver not bound to current thread
@@ -55,13 +54,13 @@ public enum WebDriverContainer {
         return webDriverHolder.get(threadId);
     }
 
-    private void markForAutoClose(Thread thread) {
-        allWebDriverThreads.add(thread);
-        if (!cleanupThreadStarted.get()) {
+    private void markForAutoClose(@Nonnull Thread thread) {
+        allDriverThreads.add(thread);
+        if (!cleanupThreadStarted) {
             synchronized (this) {
-                if (!cleanupThreadStarted.get()) {
-                    new CloseDriverThread(allWebDriverThreads).start();
-                    cleanupThreadStarted.set(true);
+                if (!cleanupThreadStarted) {
+                    new CloseDriverThread(allDriverThreads).start();
+                    cleanupThreadStarted = true;
                 }
             }
         }

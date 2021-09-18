@@ -3,6 +3,8 @@ package guru.qa.core;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import javax.annotation.Nonnull;
+
 public class Core {
 
     public static void open(String url) {
@@ -13,22 +15,26 @@ public class Core {
         WebDriverContainer.INSTANCE.closeWebDriver();
     }
 
-    public static WebElement locate(String cssSelector) {
+    @Nonnull
+    public static WebElement locate(@Nonnull String cssSelector) {
         By locator = By.cssSelector(cssSelector);
         return new SimpleElement(locator);
     }
 
-    public static WebElement locateX(String xpathSelector) {
+    @Nonnull
+    public static WebElement locateX(@Nonnull String xpathSelector) {
         By locator = By.xpath(xpathSelector);
         return new SimpleElement(locator);
     }
 
-    public static ElementList locateAll(String cssSelector) {
+    @Nonnull
+    public static ElementList locateAll(@Nonnull String cssSelector) {
         By locator = By.cssSelector(cssSelector);
         return new ElementList(locator);
     }
 
-    public static ElementList locateXAll(String xpathSelector) {
+    @Nonnull
+    public static ElementList locateXAll(@Nonnull String xpathSelector) {
         By locator = By.xpath(xpathSelector);
         return new ElementList(locator);
     }

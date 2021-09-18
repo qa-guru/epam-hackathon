@@ -11,6 +11,8 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -152,10 +154,8 @@ public class SimpleElement implements WebElement {
         });
     }
 
-    private void execute(Consumer<WebElement> action) {
-        if (delegate == null) {
-            delegate = SimpleElementLocator.INSTANCE.findElement(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
-        }
+    private void execute(@Nonnull Consumer<WebElement> action) {
+        checkDelegate();
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
@@ -168,10 +168,9 @@ public class SimpleElement implements WebElement {
         action.accept(delegate);
     }
 
-    private <T> T execute(Function<WebElement, T> action) {
-        if (delegate == null) {
-            delegate = SimpleElementLocator.INSTANCE.findElement(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
-        }
+    @Nullable
+    private <T> T execute(@Nonnull Function<WebElement, T> action) {
+        checkDelegate();
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
@@ -181,5 +180,11 @@ public class SimpleElement implements WebElement {
             }
         }
         return action.apply(delegate);
+    }
+
+    private void checkDelegate() {
+        if (delegate == null) {
+            delegate = SimpleElementLocator.INSTANCE.findElement(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
+        }
     }
 }
