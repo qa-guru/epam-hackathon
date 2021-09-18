@@ -23,7 +23,8 @@ dependencies {
             "org.aeonbits.owner:owner:1.0.12",
             "com.github.javafaker:javafaker:1.0.2",
             "io.cucumber:cucumber-junit-platform-engine:6.11.0",
-            "org.junit.jupiter:junit-jupiter:$junitVersion")
+            "org.junit.jupiter:junit-jupiter:$junitVersion",
+            'org.projectlombok:lombok:1.18.20')
     testRuntimeOnly(
             "org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }
