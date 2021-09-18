@@ -1,5 +1,5 @@
 Feature: Guess the word
-
+  @closeBrowser
   Scenario: Breaker guesses a word
   Given Open login page
   When Search in search field

@@ -36,7 +36,7 @@ public enum SimpleElementLocator {
                 if (elements == null || elements.isEmpty()) {
                     sleep(250);
                     continue;
-                }
+                } else return elements;
             } catch (Exception e) {
                 sleep(250);
             }
