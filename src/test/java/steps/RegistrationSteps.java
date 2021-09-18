@@ -77,4 +77,20 @@ public class RegistrationSteps {
         assertThat(locate("[id='email.errors']"))
                 .hasText(FieldError.INVALID_EMAIL.getText());
     }
+
+    @Then("Check password error")
+    public void checkPasswordError() {
+        assertThat(locate("[id='pwd.errors']")).hasText(FieldError.PASSWORD_MIN_REQUIREMENTS_ERROR.getText());
+    }
+
+    @Then("Check error that password and password confirmation do not match")
+    public void checkErrorThatPasswordAndPasswordConfirmationDoNotMatch() {
+        assertThat(locate("[id='checkPwd.errors']")).hasText(FieldError.PASSWORD_CONFIRMATION_DOES_NOT_MATCH.getText());
+    }
+
+
+    @Then("Check register button is disabled")
+    public void checkRegisterButtonIsDisabled() {
+        assertThat(locate(".register__section button[type='submit']")).isDisabled();
+    }
 }

@@ -44,7 +44,17 @@ public class Core {
         return new ElementList(locator);
     }
 
+
+    public static void deleteCookie(@Nonnull Cookie cookie) {
+        WebDriverContainer.INSTANCE.getRequiredWebDriver()
+                .manage()
+                .deleteCookieNamed(cookie.getName());
+    }
+
     public static void addCookie(@Nonnull Cookie cookie) {
-        WebDriverContainer.INSTANCE.getRequiredWebDriver().manage().addCookie(cookie);
+        WebDriverContainer.INSTANCE.getRequiredWebDriver()
+                .manage()
+                .addCookie(cookie);
+
     }
 }
