@@ -1,7 +1,8 @@
 package steps;
 
+import domain.AlertMessage;
 import domain.Review;
-import domain.ReviewMessage;
+import domain.ReviewFieldError;
 import guru.qa.core.Core;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -103,22 +104,22 @@ public class ProductSteps {
     @And("^Check review alert message")
     public void checkAlertMessage() {
         assertThat(locate(".global-alerts .getAccAlert"))
-                .containsText(ReviewMessage.SUCCESSFUL_REVIEW.getText());
+                .containsText(AlertMessage.SUCCESSFUL_REVIEW.getText());
     }
 
     @And("^Check alert error message")
     public void checkAlertErrorMessage() {
         assertThat(locate(".global-alerts .getAccAlert"))
-                .containsText(ReviewMessage.MANDATORY_FIELD.getText());
+                .containsText(AlertMessage.MANDATORY_REVIEW_FIELD.getText());
     }
 
     @And("^Check review error message")
     public void checkErrorMessage() {
         assertThat(locate("#headline\\.errors"))
-                .hasText(ReviewMessage.EMPTY_TITLE.getText());
+                .hasText(ReviewFieldError.EMPTY_TITLE.getText());
         assertThat(locate("#comment\\.errors"))
-                .hasText(ReviewMessage.EMPTY_DESCRIPTION.getText());
+                .hasText(ReviewFieldError.EMPTY_DESCRIPTION.getText());
         assertThat(locate("#rating\\.errors"))
-                .hasText(ReviewMessage.NO_RATE.getText());
+                .hasText(ReviewFieldError.NO_RATE.getText());
     }
 }
