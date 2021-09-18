@@ -1,76 +1,80 @@
 package steps;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import domain.FieldError;
 import domain.User;
+import guru.qa.core.Core;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$;
+import static guru.qa.core.Core.locate;
+import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class RegistrationSteps {
 
-
     @Given("Open Registration page")
     public void openRegistrationPage() {
-        Selenide.open("https://apparel-uk.local:9002/ucstorefront/en/login");
+        Core.open("https://apparel-uk.local:9002/ucstorefront/en/login");
     }
 
     @And("Fill in registration data")
     public void fillInFollowingDetails(DataTable data) {
         List<User> users = User.transformFromDataTable(data);
         User user = users.get(0);
-        $("[id='register.title']").selectOption(user.getTitle());
-        $("[id='register.firstName']").setValue(user.getFirstname());
-        $("[id='register.lastName']").setValue(user.getLastname());
-        $("[id='register.email']").setValue(user.getEmail());
-        $("[id='password']").setValue(user.getPassword());
-        $("[id='register.checkPwd']").setValue(user.getConfirmation());
+        new Select(locate("[id='register.title']")).selectByVisibleText(user.getTitle());
+        locate("[id='register.firstName']").sendKeys(user.getFirstname());
+        locate("[id='register.lastName']").sendKeys(user.getLastname());
+        locate("[id='register.email']").sendKeys(user.getEmail());
+        locate("[id='password']").sendKeys(user.getPassword());
+        locate("[id='register.checkPwd']").sendKeys(user.getConfirmation());
     }
 
     @And("Confirm consent")
     public void confirmConsent() {
-        $("[id='consentForm.consentGiven1']").setSelected(true);
+        locate("[id='consentForm.consentGiven1']").click();
     }
 
     @And("Agree with terms and conditions")
     public void agreeWithTermsAndConditions() {
-        $("[id='registerChkTermsConditions']").setSelected(true);
+        locate("[id='registerChkTermsConditions']").click();
     }
 
     @And("Click to register")
     public void clickToRegister() {
-        $(".register__section button[type='submit']").click();
+        locate(".register__section button[type='submit']").click();
     }
 
     @Then("Check that user is registered")
     public void checkThatUserIsRegistered() {
-        $(".main__inner-wrapper .global-alerts").shouldHave(Condition.text("Thank you for registering."));
+        assertThat(locate(".main__inner-wrapper .global-alerts"))
+                .containsText("Thank you for registering.");
     }
 
     @Then("Check error that user already exists")
     public void checkErrorThatUserAlreadyExists() {
-        $("[id='email.errors']").scrollIntoView(false).shouldHave(Condition.text(FieldError.ACCOUNT_ALREADY_EXISTS.getText()));
+        assertThat(locate("[id='email.errors']"))
+                .hasText(FieldError.ACCOUNT_ALREADY_EXISTS.getText());
     }
 
     @Then("Check empty first name error")
     public void checkEmptyFirstNameError() {
-        $("[id='firstName.errors']").scrollIntoView(false).shouldHave(Condition.text(FieldError.EMPTY_FIRST_NAME.getText()));
+        assertThat(locate("[id='firstName.errors']"))
+                .hasText(FieldError.EMPTY_FIRST_NAME.getText());
     }
 
     @Then("Check empty last name error")
     public void checkEmptyLastNameError() {
-        $("[id='lastName.errors']").scrollIntoView(false).shouldHave(Condition.text(FieldError.EMPTY_LAST_NAME.getText()));
-
+        assertThat(locate("[id='lastName.errors']"))
+                .hasText(FieldError.EMPTY_LAST_NAME.getText());
     }
 
     @Then("Check email error")
     public void checkEmailError() {
-        $("[id='email.errors']").scrollIntoView(false).shouldHave(Condition.text(FieldError.INVALID_EMAIL.getText()));
+        assertThat(locate("[id='email.errors']"))
+                .hasText(FieldError.INVALID_EMAIL.getText());
     }
 }
