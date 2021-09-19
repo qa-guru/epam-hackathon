@@ -58,7 +58,7 @@ public class SortSteps {
 
     @Then("Check sorted price results ascending")
     public void checkSortedPriceResultsAscending() {
-        assertThat(locateAll(".price")).checkTextsOrder(Comparator.naturalOrder());
+        assertThat(locateAll(".price").trimTo(5)).checkTextsOrder(Comparator.naturalOrder());
     }
 
     @When("Set sorting by price descending")

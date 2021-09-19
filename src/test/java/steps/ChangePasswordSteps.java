@@ -30,6 +30,6 @@ public class ChangePasswordSteps {
 
     @Then("Check that error is displayed that current password is incorrect")
     public void checkThatErrorIsDisplayedThatCurrentPasswordIsIncorrect() {
-        assertThat(locate("[id='currentPassword.errors']")).hasText(CommonError.CURRENT_PASSWORD_NOT_MATCH.getText());
+        assertThat(locate("[id='currentPassword.errors']")).containsText(CommonError.CURRENT_PASSWORD_NOT_MATCH.getText());
     }
 }

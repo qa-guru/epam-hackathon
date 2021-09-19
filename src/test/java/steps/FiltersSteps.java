@@ -23,7 +23,6 @@ public class FiltersSteps {
     private String gender;
     private String collectionFilter = "T-Shirts women";
     private String categoryFilter = "Streetwear men";
-    private String brandFilter = "Billabong";
 
     @Given("Open brands page")
     public void openBrandsPage() {
@@ -34,7 +33,7 @@ public class FiltersSteps {
 
     @When("Use price filter")
     public void usePriceFilter() {
-        categoryPage.getFilters().applyFilter("£50-£99.99");
+        categoryPage.getFilters().applyCheckBoxFilter("£50-£99.99");
         priceStarts = 50;
     }
 
@@ -46,7 +45,7 @@ public class FiltersSteps {
 
     @When("Use size filter")
     public void useSizeFilter() {
-        categoryPage.getFilters().applyFilter("XXL");
+        categoryPage.getFilters().applyCheckBoxFilter("XXL");
         size = "XXL";
     }
 
@@ -57,29 +56,29 @@ public class FiltersSteps {
 
     @When("Use color filter")
     public void useColorFilter() {
-        categoryPage.getFilters().applyFilter("BLUE");
-        color = "BLUE";
+        categoryPage.getFilters().applyCheckBoxFilter("BLUE");
+        color = "Blue";
     }
 
     @Then("Check if the color is right")
     public void checkIfTheColorIsRight() {
-        ElementListMatcher.assertThat(categoryPage.getProductsGrid()).containsTextsInAnyOrder(color);
+        ElementListMatcher.assertThat(categoryPage.getProductsGrid()).containsTextInAnyElement(color);
     }
 
     @When("Use gender filter")
     public void useGenderFilter() {
-        categoryPage.getFilters().applyFilter("Female");
+        categoryPage.getFilters().applyTextLinkFilter("Female");
         gender = "Women";
     }
 
     @Then("Check if the gender is right")
     public void checkIfTheGenderIsRight() {
-        ElementListMatcher.assertThat(categoryPage.getProductsGrid()).containsTextsInAnyOrder(gender);
+        ElementListMatcher.assertThat(categoryPage.getProductsGrid()).containsTextInAnyElement(gender);
     }
 
     @When("Use collection filter")
     public void useCollectionFilter() {
-        categoryPage.getFilters().applyFilter(collectionFilter);
+        categoryPage.getFilters().applyTextLinkFilter(collectionFilter);
         categoryPage.getProductsGrid().get(0).click();
     }
 
@@ -90,7 +89,7 @@ public class FiltersSteps {
 
     @When("Use category filter")
     public void useCategoryFilter() {
-        categoryPage.getFilters().applyFilter(categoryFilter);
+        categoryPage.getFilters().applyTextLinkFilter(categoryFilter);
         categoryPage.getProductsGrid().get(0).click();
     }
 

@@ -41,6 +41,10 @@ public class ElementList implements List<WebElement> {
         return new ElementList(source);
     }
 
+    public ElementList trimTo(int indexTo) {
+        return wrap(subList(0, indexTo));
+    }
+
     public WebElement findByText(@Nonnull String text) {
         return execute(webElements -> {
             return webElements.stream().filter(webElement -> webElement.getText().contains(text))

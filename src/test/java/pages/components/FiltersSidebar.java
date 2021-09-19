@@ -7,10 +7,17 @@ import static guru.qa.core.Core.locateAll;
 
 public class FiltersSidebar {
 
-    private ElementList filters = locateAll(".facet__list__label");
+    private ElementList simpleFilters = locateAll(".facet__list__label");
+    private ElementList textFilters = locateAll(".facet__text");
 
-    public WebElement applyFilter(String filter) {
-        WebElement filterElement = filters.findByText(filter);
+    public WebElement applyCheckBoxFilter(String filter) {
+        WebElement filterElement = simpleFilters.findByText(filter);
+        filterElement.click();
+        return filterElement;
+    }
+
+    public WebElement applyTextLinkFilter(String filter) {
+        WebElement filterElement = textFilters.findByText(filter);
         filterElement.click();
         return filterElement;
     }

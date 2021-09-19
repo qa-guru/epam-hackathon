@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -47,6 +48,16 @@ public class ElementListMatcher {
                 .hasSizeGreaterThan(0)
                 .extracting((Function<WebElement, String>) WebElement::getText)
                 .containsExactlyInAnyOrder(expectedTexts));
+        return this;
+    }
+
+    @Nonnull
+    public ElementListMatcher containsTextInAnyElement(@Nonnull String expectedText) {
+        flexCheck(webElements ->
+                Assertions.assertThat(webElements.stream().map(WebElement::getText).anyMatch(
+                        text -> text.toLowerCase(Locale.ROOT).contains(expectedText.toLowerCase(Locale.ROOT))
+                )).isTrue()
+        );
         return this;
     }
 
