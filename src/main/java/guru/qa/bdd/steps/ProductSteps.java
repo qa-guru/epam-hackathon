@@ -16,6 +16,8 @@ import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class ProductSteps {
+    private static final String productName = "Biarritz Women black";
+    private static final String productCode = "111114_black";
 
     @Given("^Open product page")
     public void openProductPage() {
@@ -25,7 +27,7 @@ public class ProductSteps {
     @And("^I can see the product code")
     public void seeProductCode() {
         assertThat(locate(".product-details .code"))
-                .hasText("111114_black");
+                .hasText(productCode);
     }
 
     @When("^Increase Item Quantity by one")
@@ -46,12 +48,12 @@ public class ProductSteps {
     @And("^I can see the product name")
     public void checkProductName() {
         assertThat(locate("#cboxContent .name"))
-                .hasText("Biarritz Women black");
+                .hasText(productName);
     }
 
     @Then("^Go to basket")
     public void goToBasket() {
-        locate("#cboxContent .add-to-cart-item").click();
+        locate("#cboxContent .add-to-cart-button").click();
     }
 
     @Then("^Continue shopping")
@@ -121,5 +123,13 @@ public class ProductSteps {
                 .hasText(ReviewFieldError.EMPTY_DESCRIPTION.getText());
         assertThat(locate("#rating\\.errors"))
                 .hasText(ReviewFieldError.NO_RATE.getText());
+    }
+
+    @And("^Check product in basket")
+    public void checkProductInBasket() {
+        assertThat(locate(".item__list__cart .item__list--item .item__name"))
+                .hasText(productName);
+        assertThat(locate(".item__list__cart .item__list--item .item__code"))
+                .hasText(productCode);
     }
 }
