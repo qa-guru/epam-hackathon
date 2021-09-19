@@ -1,9 +1,11 @@
 package guru.qa.core.matcher;
 
 import guru.qa.core.ElementList;
+import guru.qa.core.WebDriverContainer;
 import guru.qa.core.config.Config;
 import org.apache.commons.lang3.time.StopWatch;
 import org.assertj.core.api.Assertions;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
@@ -63,12 +65,18 @@ public class ElementListMatcher {
 
     private void flexCheck(@Nonnull Consumer<ElementList> action) {
         StopWatch stopWatch = StopWatch.createStarted();
+        boolean scrolled = false;
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
+                if (!scrolled) {
+                    ((JavascriptExecutor) WebDriverContainer.INSTANCE.getRequiredWebDriver())
+                            .executeScript("arguments[0].scrollIntoView(false)", matchedList.get(0));
+                    scrolled = true;
+                }
                 action.accept(matchedList);
                 return;
             } catch (Throwable e) {
-                sleep(250);
+                sleep(Config.INSTANCE.defaultIterationTimeout);
             }
         }
         action.accept(matchedList);
