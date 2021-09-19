@@ -9,8 +9,8 @@ import static guru.qa.core.Core.locateAll;
 
 public class CategoryMenu {
 
-    private WebElement self = locate(".navigation__overflow");
-    private ElementList menuItems = locateAll(".nav__links--primary");
+    private final WebElement self = locate(".navigation__overflow");
+    private final ElementList menuItems = locateAll(".nav__links--primary");
 
     public void navigateTo(MenuItem menuName) {
         menuItems.stream()
