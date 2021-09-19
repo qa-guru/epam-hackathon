@@ -1,21 +1,28 @@
 package pages;
 
 import guru.qa.core.ElementList;
-import lombok.Getter;
 import pages.components.CategoryMenu;
 import pages.components.FiltersSidebar;
 
 import static guru.qa.core.Core.locateAll;
 
-
-@Getter
 public class CategoryPage {
 
-    private CategoryMenu menu = new CategoryMenu();
+    public CategoryMenu getMenu() {
+        return menu;
+    }
 
-    private FiltersSidebar filters = new FiltersSidebar();
+    private final CategoryMenu menu = new CategoryMenu();
 
-    private ElementList productsGrid = locateAll(".product-item");
+    public FiltersSidebar getFilters() {
+        return filters;
+    }
 
+    private final FiltersSidebar filters = new FiltersSidebar();
 
+    public ElementList getProductsGrid() {
+        return productsGrid;
+    }
+
+    private final ElementList productsGrid = locateAll(".product-item");
 }

@@ -9,7 +9,7 @@ import static guru.qa.core.Core.locateAll;
 
 public class FiltersSidebar {
 
-    private ElementList filters = locateAll("div.facet");
+    private final ElementList filters = locateAll("div.facet");
 
     public String setFilter(FiltersItem filter, int indexFilter) {
 
@@ -27,7 +27,7 @@ public class FiltersSidebar {
 
     }
 
-    public String setFilter(FiltersItem filter, String stringFilter) {
+    public void setFilter(FiltersItem filter, String stringFilter) {
 
         WebElement filterInUse = filters.stream()
                 .filter(webElement -> filter.getFilterName().equals(webElement.getText().substring(0,filter.getFilterName().length())))
@@ -44,8 +44,6 @@ public class FiltersSidebar {
 
         String filterActiveString = filterActive.getText();
         filterActive.click();
-
-        return filterActiveString;
 
     }
 
