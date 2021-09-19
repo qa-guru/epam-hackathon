@@ -39,3 +39,6 @@ target/
 /gradlew.bat
 .todo
 *.properties
+
+# Report
+report.pdf
