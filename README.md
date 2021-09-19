@@ -1,14 +1,16 @@
-
 # Test Automation Haсkaton (QA.GURU Team)
 
-*  Для локального запуска тестов необходимо вызвать метод main из CucumberTestRunner.class
+* Запуск на JENKINS!! gradle run
+* после этого отчет будет в build.directory/report.pdf
 
-*  Тесты выполнены с использованием библиотеки Cucumber
+* Для локального запуска тестов необходимо вызвать метод main из CucumberTestRunner.class
 
-*  По результатм прохождения тестов в корне проекта формируется файл "report.pdf", за формирование которого отвечает CucumberReporter.class
+* Тесты выполнены с использованием библиотеки Cucumber
 
-![Report_example](src/test/resources/examples/report_example.png)
+* По результатм прохождения тестов в корне проекта формируется файл "report.pdf", за формирование которого отвечает
+  CucumberReporter.class
 
+![Report_example](src/main/resources/examples/report_example.png)
 
 *  Настройки кофигурации находсятся в классе Config.class
 
