@@ -1,5 +1,6 @@
 package steps;
 
+import domain.CommonError;
 import guru.qa.core.Core;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -29,6 +30,6 @@ public class ChangePasswordSteps {
 
     @Then("Check that error is displayed that current password is incorrect")
     public void checkThatErrorIsDisplayedThatCurrentPasswordIsIncorrect() {
-        assertThat(locate("[id='currentPassword.errors']")).isVisible();
+        assertThat(locate("[id='currentPassword.errors']")).hasText(CommonError.CURRENT_PASSWORD_NOT_MATCH.getText());
     }
 }

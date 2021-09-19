@@ -19,7 +19,7 @@ public class BaseSteps {
 
     @Then("Check that user as {string} is logged in")
     public void checkThatUserAsIsLoggedIn(String username) {
-        assertThat(locate(".logged_in")).hasTexts("Welcome", username);
+        assertThat(locate(".logged_in")).hasTexts("WELCOME", username);
         assertThat(locate(".nav__links a[href='/ucstorefront/en/logout']")).isVisible();
     }
 
@@ -27,4 +27,5 @@ public class BaseSteps {
     public void tearDownBrowser() {
         Core.close();
     }
+
 }

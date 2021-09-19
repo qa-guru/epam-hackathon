@@ -9,4 +9,12 @@ public class RandomUtils {
     public static String getRandomEmail() {
         return faker.internet().emailAddress();
     }
+
+    public static String getRandomFirstName() {
+        return faker.name().firstName();
+    }
+
+    public static String getRandomLastName() {
+        return faker.name().lastName();
+    }
 }
