@@ -1,6 +1,25 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <style>
+        .content {
+            text-align: center;
+        }
+
+        table {
+            border: 2px solid black;
+            width: 600px;
+            margin: 20px auto;
+        }
+
+        tr, td {
+            background-color: lightgrey;
+            color: black;
+            padding: 10px 15px;
+            font-size: 14px;
+            max-width: 200px;
+        }
+    </style>
 </head>
 <body>
 <div style="font-family: 'Inter', serif" class="page">
@@ -8,10 +27,9 @@
     <main class="content">
         <h1>Test results:</h1>
         <p th:text="${testsStarted}"></p>
-        <p th:text="${testsSuccess}"></p>
-        <p th:text="${testsFailed}"></p>
-
-        <table style="border: 1px solid black">
+        <p style="color: green" th:text="${testsSuccess}"></p>
+        <p style="color: red" th:text="${testsFailed}"></p>
+        <table>
             <thead>
             <tr>
                 <th>Test Name</th>

@@ -23,8 +23,8 @@ public class CucumberReporter {
     public static void report(TestExecutionSummary summary) throws IOException, DocumentException {
         HashMap<String, Object> values = new HashMap<>();
         values.put("testsStarted", String.format("%s tests were started", summary.getTestsStartedCount()));
-        values.put("testsSuccess", String.format("%s, tests were successful", summary.getTestsSucceededCount()));
-        values.put("testsFailed", String.format("%s, tests failed", summary.getTestsFailedCount()));
+        values.put("testsSuccess", String.format("%s tests were successful", summary.getTestsSucceededCount()));
+        values.put("testsFailed", String.format("%s tests failed", summary.getTestsFailedCount()));
 
         if (summary.getFailures().size() > 0) {
             ArrayList<TestFailure> failures = new ArrayList<>();
