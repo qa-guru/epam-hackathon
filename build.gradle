@@ -42,7 +42,3 @@ tasks.withType(JavaCompile) {
 application {
     mainClassName = mainClass
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '6.5' // version required
-}
