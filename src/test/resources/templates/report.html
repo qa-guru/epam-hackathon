@@ -1,0 +1,32 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div style="font-family: 'Inter', serif" class="page">
+
+    <main class="content">
+        <h1>Test results:</h1>
+        <p th:text="${testsStarted}"></p>
+        <p th:text="${testsSuccess}"></p>
+        <p th:text="${testsFailed}"></p>
+
+        <table style="border: 1px solid black">
+            <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Failure reason</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="failure: ${failures}">
+                <td th:text="${failure.testName}"/>
+                <td th:text="${failure.reason}"/>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+
+</div>
+</body>
+</html>

@@ -16,7 +16,9 @@ dependencies {
     implementation(
             "org.seleniumhq.selenium:selenium-java:4.0.0-rc-1",
             "org.apache.commons:commons-lang3:3.12.0",
-            'org.assertj:assertj-core:3.20.2'
+            'org.assertj:assertj-core:3.20.2',
+            'org.thymeleaf:thymeleaf:3.0.12.RELEASE',
+            'org.xhtmlrenderer:flying-saucer-pdf:9.1.22'
     )
     testImplementation(
             "org.aeonbits.owner:owner:1.0.12",
@@ -35,6 +37,8 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+
+    file("${buildDir}/report").mkdirs()
 }
 
 tasks.withType(Test) {
