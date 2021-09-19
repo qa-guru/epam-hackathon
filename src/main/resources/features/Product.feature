@@ -6,6 +6,7 @@ Feature: Product feature
     When Add to bag
     And I can see the product name
     Then Go to basket
+    And Check product in basket
 
   Scenario: Change quantity add to bag and go to basket
     Given Open product page
@@ -16,6 +17,7 @@ Feature: Product feature
     When Decrease Item Quantity by one
     When Add to bag
     Then Go to basket
+    And Check product in basket
 
   Scenario: Add to bag and continue shopping
     Given Open product page
