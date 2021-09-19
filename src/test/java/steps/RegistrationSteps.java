@@ -1,6 +1,7 @@
 package steps;
 
-import domain.FieldError;
+import api.ApiCalls;
+import domain.CommonError;
 import domain.User;
 import guru.qa.core.Core;
 import io.cucumber.datatable.DataTable;
@@ -9,12 +10,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.IOException;
 import java.util.List;
 
 import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class RegistrationSteps {
+
+    private ApiCalls apiCalls = new ApiCalls();
 
     @Given("Open Registration page")
     public void openRegistrationPage() {
@@ -57,40 +61,46 @@ public class RegistrationSteps {
     @Then("Check error that user already exists")
     public void checkErrorThatUserAlreadyExists() {
         assertThat(locate("[id='email.errors']"))
-                .hasText(FieldError.ACCOUNT_ALREADY_EXISTS.getText());
+                .hasText(CommonError.ACCOUNT_ALREADY_EXISTS.getText());
     }
 
     @Then("Check empty first name error")
     public void checkEmptyFirstNameError() {
         assertThat(locate("[id='firstName.errors']"))
-                .hasText(FieldError.EMPTY_FIRST_NAME.getText());
+                .hasText(CommonError.EMPTY_FIRST_NAME.getText());
     }
 
     @Then("Check empty last name error")
     public void checkEmptyLastNameError() {
         assertThat(locate("[id='lastName.errors']"))
-                .hasText(FieldError.EMPTY_LAST_NAME.getText());
+                .hasText(CommonError.EMPTY_LAST_NAME.getText());
     }
 
     @Then("Check email error")
     public void checkEmailError() {
         assertThat(locate("[id='email.errors']"))
-                .hasText(FieldError.INVALID_EMAIL.getText());
+                .hasText(CommonError.INVALID_EMAIL.getText());
     }
 
     @Then("Check password error")
     public void checkPasswordError() {
-        assertThat(locate("[id='pwd.errors']")).hasText(FieldError.PASSWORD_MIN_REQUIREMENTS_ERROR.getText());
+        assertThat(locate("[id='pwd.errors']")).hasText(CommonError.PASSWORD_MIN_REQUIREMENTS_ERROR.getText());
     }
 
     @Then("Check error that password and password confirmation do not match")
     public void checkErrorThatPasswordAndPasswordConfirmationDoNotMatch() {
-        assertThat(locate("[id='checkPwd.errors']")).hasText(FieldError.PASSWORD_CONFIRMATION_DOES_NOT_MATCH.getText());
+        assertThat(locate("[id='checkPwd.errors']")).hasText(CommonError.PASSWORD_CONFIRMATION_DOES_NOT_MATCH.getText());
     }
 
 
     @Then("Check register button is disabled")
     public void checkRegisterButtonIsDisabled() {
         assertThat(locate(".register__section button[type='submit']")).isDisabled();
+    }
+
+    @Given("Api register with username as <username> and password as <password>")
+    public void apiRegisterWithUsernameAsUsernameAndPasswordAsPassword(String username, String password) throws IOException, InterruptedException {
+        apiCalls.apiRegister(username, password);
+
     }
 }
