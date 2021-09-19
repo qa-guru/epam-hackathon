@@ -10,7 +10,6 @@ public enum FiltersItem {
     CATEGORY("Shop by Category"),
     BRAND("Shop by Brand");
 
-
     private final String filterName;
 
     FiltersItem(String displayedName) {
@@ -21,10 +20,8 @@ public enum FiltersItem {
         return filterName;
     }
 
-
     @Override
     public String toString() {
         return filterName;
     }
-
 }

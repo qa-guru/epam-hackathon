@@ -9,6 +9,7 @@ import static guru.qa.core.Core.locate;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class SearchSteps {
+
     @When("Search product by code")
     public void searchProductByCode() {
         WebElement input = locate(".js-site-search-input");

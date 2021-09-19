@@ -30,7 +30,7 @@ public class CucumberRunner {
 
         TestExecutionSummary summary = listener.getSummary();
 
-        if (Config.INSTANCE.rerunFailedTests) {
+        if (Config.INSTANCE.rerunFailedTests && summary.getFailures().size() > 0) {
             List<UniqueIdSelector> failures = summary.getFailures().stream()
                     .map(TestExecutionSummary.Failure::getTestIdentifier)
                     .filter(TestIdentifier::isTest)

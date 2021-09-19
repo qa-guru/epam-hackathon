@@ -13,10 +13,6 @@ public class CategoryMenu {
     private ElementList menuItems = locateAll(".nav__links--primary");
 
     public void navigateTo(MenuItem menuName) {
-        menuItems.stream()
-                .filter(webElement -> menuName.getDisplayedName().equals(webElement.getText()))
-                .findAny()
-                .orElse(null).click();
+        menuItems.findByText(menuName.getDisplayedName()).click();
     }
-
 }

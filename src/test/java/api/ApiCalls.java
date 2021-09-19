@@ -20,7 +20,6 @@ public class ApiCalls {
     private HttpClient httpClient = HttpClientFactory.getClient();
     private ThreadLocal<List<String>> cookiesVeryNeeded = new ThreadLocal<>();
 
-
     public void apiLogin(String email, String password) throws IOException, InterruptedException {
         HttpRequest.BodyPublisher requestBody =
                 HttpRequest.BodyPublishers.ofString("j_username=" + decodeEmail(email) + "&j_password="

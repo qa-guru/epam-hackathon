@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public class Review {
+
     private String title;
     private String description;
     private String rate;
@@ -18,10 +19,8 @@ public class Review {
     }
 
     private static class ReviewTransformer implements TableTransformer<List<Review>> {
-
         @Override
         public List<Review> transform(DataTable table) {
-
             List<Review> review = new ArrayList<>();
 
             table.cells()

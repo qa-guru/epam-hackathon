@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
+import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -29,6 +30,14 @@ public class ElementListMatcher {
     public ElementListMatcher hasSizeGreaterThan(int expectedSize) {
         flexCheck(webElements -> org.assertj.core.api.Assertions.assertThat(webElements)
                 .hasSizeGreaterThan(expectedSize));
+        return this;
+    }
+
+    @Nonnull
+    public ElementListMatcher checkTextsOrder(Comparator<String> comparator) {
+        flexCheck(webElements -> org.assertj.core.api.Assertions.assertThat(webElements)
+                .extracting((Function<WebElement, String>) WebElement::getText)
+                .isSortedAccordingTo(comparator));
         return this;
     }
 

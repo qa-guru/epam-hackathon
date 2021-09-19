@@ -27,7 +27,6 @@ public class ChangePasswordSteps {
         locate(".accountActions button[type='submit']").click();
     }
 
-
     @Then("Check that error is displayed that current password is incorrect")
     public void checkThatErrorIsDisplayedThatCurrentPasswordIsIncorrect() {
         assertThat(locate("[id='currentPassword.errors']")).isVisible();

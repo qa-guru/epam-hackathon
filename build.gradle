@@ -1,6 +1,5 @@
 plugins {
     id 'java-library'
-    id "io.freefair.lombok" version "6.2.0"
 }
 
 repositories {
@@ -11,12 +10,14 @@ def junitVersion = "5.8.0"
 def junitPlatformVersion = "1.8.0"
 
 dependencies {
+    implementation('io.github.bonigarcia:webdrivermanager:5.0.2') {
+        exclude group: 'org.seleniumhq.selenium', module: 'selenium-java'
+    }
     implementation(
-            "io.github.bonigarcia:webdrivermanager:5.0.2",
             "org.seleniumhq.selenium:selenium-java:4.0.0-rc-1",
             "org.apache.commons:commons-lang3:3.12.0",
             'org.assertj:assertj-core:3.20.2'
-         )
+    )
     testImplementation(
             "org.aeonbits.owner:owner:1.0.12",
             "com.github.javafaker:javafaker:1.0.2",

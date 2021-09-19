@@ -6,5 +6,5 @@ public enum Config {
     public Browser browser = Browser.CHROME;
     public long actionTimeout = 6000L;
     public boolean headless = false;
-    public boolean rerunFailedTests = false;
+    public boolean rerunFailedTests = true;
 }

@@ -28,6 +28,15 @@ public class SimpleElement implements WebElement {
         this.locator = locator;
     }
 
+    private SimpleElement(WebElement webElement) {
+        locator = null;
+        this.delegate = webElement;
+    }
+
+    public static SimpleElement wrap(WebElement source) {
+        return new SimpleElement(source);
+    }
+
     @Override
     public void click() {
         execute(WebElement::click);
@@ -107,12 +116,12 @@ public class SimpleElement implements WebElement {
 
     @Override
     public List<WebElement> findElements(By by) {
-        return SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
+        return SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), by);
     }
 
     @Override
     public WebElement findElement(By by) {
-        return SimpleElementLocator.INSTANCE.findElement(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
+        return SimpleElementLocator.INSTANCE.findElement(WebDriverContainer.INSTANCE.getRequiredWebDriver(), by);
     }
 
     @Override

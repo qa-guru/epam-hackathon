@@ -12,41 +12,19 @@ public class FiltersSidebar {
     private ElementList filters = locateAll("div.facet");
 
     public String setFilter(FiltersItem filter, int indexFilter) {
-
-        WebElement filterInUse = filters.stream()
-                .filter(webElement -> filter.getFilterName().equals(webElement.getText().substring(0,filter.getFilterName().length())))
-                .findAny()
-                .orElse(null);
-
-        WebElement filterActive = filterInUse.findElements(new By.ByCssSelector("span.facet__list__text")).get(indexFilter);
-
+        WebElement filterInUse = filters.findByText(filter.getFilterName());
+        WebElement filterActive = filterInUse.findElements(By.cssSelector("span.facet__list__text")).get(indexFilter);
         String filterActiveString = filterActive.getText();
         filterActive.click();
-
         return filterActiveString;
-
     }
 
     public String setFilter(FiltersItem filter, String stringFilter) {
-
-        WebElement filterInUse = filters.stream()
-                .filter(webElement -> filter.getFilterName().equals(webElement.getText().substring(0,filter.getFilterName().length())))
-                .findAny()
-                .orElse(null);
-
-        WebElement filterActive = filterInUse.findElements(new By.ByCssSelector("span.facet__text")).stream()
-                .filter(webElement -> stringFilter
-                        .equals(webElement
-                                .getText()
-                                .substring(0, Math.min(stringFilter.length(), webElement.getText().length())))) //stringFilter.length())))
-                .findAny()
-                .orElse(null);//find(Condition.text(stringFilter));
-
+        WebElement filterInUse = filters.findByText(filter.getFilterName());
+        WebElement filterActive = ElementList.wrap(filterInUse.findElements(new By.ByCssSelector("span.facet__text")))
+                .findByText(stringFilter);
         String filterActiveString = filterActive.getText();
         filterActive.click();
-
         return filterActiveString;
-
     }
-
 }

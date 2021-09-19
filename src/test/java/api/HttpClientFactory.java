@@ -23,7 +23,6 @@ public class HttpClientFactory {
         System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
     }
 
-
     private static HttpClient createClient() {
 
         TrustManager[] trustAllCerts = new TrustManager[]{
