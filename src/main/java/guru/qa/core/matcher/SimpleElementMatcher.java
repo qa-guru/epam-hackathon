@@ -75,6 +75,13 @@ public class SimpleElementMatcher {
     }
 
     @Nonnull
+    public SimpleElementMatcher containsIgnoringCaseText(@Nullable String expectedText) {
+        flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getText())
+                .containsIgnoringCase(expectedText));
+        return this;
+    }
+
+    @Nonnull
     public SimpleElementMatcher hasAttribute(@Nullable String attributeName, @Nullable String expectedValue) {
         flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getAttribute(attributeName))
                 .contains(expectedValue));

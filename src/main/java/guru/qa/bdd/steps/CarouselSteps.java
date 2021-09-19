@@ -4,11 +4,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 
 import static guru.qa.core.Core.locate;
+import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class CarouselSteps {
+    private String productName;
+
     @And("Check product page")
     public void checkProductPage(){
-        locate(".product-details .name").isDisplayed();
+        assertThat(locate(".product-details .name")).containsIgnoringCaseText(productName);
     }
 
     @Then("Click on product best selling link")
@@ -18,6 +21,6 @@ public class CarouselSteps {
 
     @And("Check first best selling product")
     public void checkFirstBestSellingProduct(){
-        locate(".owl-wrapper-outer .owl-item .carousel__item--name").isDisplayed();
+        productName = locate(".owl-wrapper-outer .owl-item .carousel__item--name").getText();
     }
 }
