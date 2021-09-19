@@ -3,15 +3,16 @@ package guru.qa.core;
 import guru.qa.core.config.Config;
 import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -257,26 +258,38 @@ public class ElementList implements List<WebElement> {
     private void execute(@Nonnull Consumer<List<WebElement>> action) {
         checkDelegate();
         StopWatch stopWatch = StopWatch.createStarted();
+        boolean scrolled = false;
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
+                if (!scrolled) {
+                    ((JavascriptExecutor) WebDriverContainer.INSTANCE.getRequiredWebDriver())
+                            .executeScript("arguments[0].scrollIntoView(false)", delegate.get(0));
+                    scrolled = true;
+                }
                 action.accept(delegate);
                 return;
             } catch (Exception e) {
-                sleep(250);
+                sleep(Config.INSTANCE.defaultIterationTimeout);
             }
         }
         action.accept(delegate);
     }
 
-    @Nullable
+    @Nonnull
     private <T> T execute(@Nonnull Function<List<WebElement>, T> action) {
         checkDelegate();
         StopWatch stopWatch = StopWatch.createStarted();
+        boolean scrolled = false;
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
+                if (!scrolled) {
+                    ((JavascriptExecutor) WebDriverContainer.INSTANCE.getRequiredWebDriver())
+                            .executeScript("arguments[0].scrollIntoView(false)", delegate.get(0));
+                    scrolled = true;
+                }
                 return action.apply(delegate);
             } catch (Exception e) {
-                sleep(250);
+                sleep(Config.INSTANCE.defaultIterationTimeout);
             }
         }
         return action.apply(delegate);
@@ -284,7 +297,7 @@ public class ElementList implements List<WebElement> {
 
     private void checkDelegate() {
         if (delegate == null) {
-            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator)
+            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), Objects.requireNonNull(locator))
                     .stream()
                     .map(SimpleElement::wrap)
                     .collect(Collectors.toList());

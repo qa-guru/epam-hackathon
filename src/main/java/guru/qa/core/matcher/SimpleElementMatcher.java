@@ -1,7 +1,9 @@
 package guru.qa.core.matcher;
 
+import guru.qa.core.WebDriverContainer;
 import guru.qa.core.config.Config;
 import org.apache.commons.lang3.time.StopWatch;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
@@ -81,12 +83,18 @@ public class SimpleElementMatcher {
 
     private void flexCheck(@Nonnull Consumer<WebElement> action) {
         StopWatch stopWatch = StopWatch.createStarted();
+        boolean scrolled = false;
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {
             try {
+                if (!scrolled) {
+                    ((JavascriptExecutor) WebDriverContainer.INSTANCE.getRequiredWebDriver())
+                            .executeScript("arguments[0].scrollIntoView(false)", matchedElement);
+                    scrolled = true;
+                }
                 action.accept(matchedElement);
                 return;
             } catch (Throwable e) {
-                sleep(250);
+                sleep(Config.INSTANCE.defaultIterationTimeout);
             }
         }
         action.accept(matchedElement);

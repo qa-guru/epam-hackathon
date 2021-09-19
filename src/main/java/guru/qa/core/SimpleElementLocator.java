@@ -21,7 +21,7 @@ public enum SimpleElementLocator {
             try {
                 return ctx.findElement(selector);
             } catch (Exception e) {
-                sleep(250);
+                sleep(Config.INSTANCE.defaultIterationTimeout);
             }
         }
         return ctx.findElement(selector);
@@ -34,11 +34,11 @@ public enum SimpleElementLocator {
             try {
                 List<WebElement> elements = ctx.findElements(selector);
                 if (elements == null || elements.isEmpty()) {
-                    sleep(250);
+                    sleep(Config.INSTANCE.defaultIterationTimeout);
                     continue;
                 } else return elements;
             } catch (Exception e) {
-                sleep(250);
+                sleep(Config.INSTANCE.defaultIterationTimeout);
             }
         }
         return ctx.findElements(selector);
