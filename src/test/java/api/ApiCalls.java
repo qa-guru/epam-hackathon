@@ -3,6 +3,7 @@ package api;
 import guru.qa.core.Core;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Cookie;
+import utils.RandomUtils;
 
 import java.io.IOException;
 import java.net.URI;
@@ -40,6 +41,23 @@ public class ApiCalls {
             Core.deleteCookie(cookie);
             Core.addCookie(cookie);
         }
+    }
+
+    public void apiRegister(String email, String password) throws IOException, InterruptedException {
+        HttpRequest.BodyPublisher requestBody =
+                HttpRequest.BodyPublishers.ofString("titleCode=miss&firstName=" + RandomUtils.getRandomFirstName() + "&lastName=" + RandomUtils.getRandomLastName() + "&email=" + decodeEmail(email) + "&pwd="
+                        + password + "&checkPwd=" + password + "&consentForm.consentTemplateId=MARKETING_NEWSLETTER&consentForm.consentTemplateVersion=0&termsCheck=true&CSRFToken=" + getCSRFToken());
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "login/register"))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Accept", "*/*")
+                .header("Accept-Encoding", "gzip, deflate, br")
+                .header("Cookie", parseCookieList(cookiesVeryNeeded.get()))
+                .POST(requestBody)
+                .build();
+
+        httpClient.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
     private String getCSRFToken() throws IOException, InterruptedException {
