@@ -6,7 +6,7 @@ import guru.qa.core.Core;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import pages.CategoryPage;
 import pages.components.CategoryMenu;
@@ -17,7 +17,7 @@ import static guru.qa.core.Core.locate;
 
 public class FiltersSteps {
 
-    private CategoryPage categoryPage = new CategoryPage();
+    private final CategoryPage categoryPage = new CategoryPage();
     int priceStarts;
     String size;
     String color;
@@ -41,7 +41,7 @@ public class FiltersSteps {
     @Then("Check if the price is right")
     public void checkIfThePriceIsRight() {
         int priceToCompare = Integer.parseInt(categoryPage.getProductsGrid().get(0).findElement(By.className("price")).getText().substring(1, 3));
-        Assert.assertTrue(priceStarts <= priceToCompare);
+        Assertions.assertTrue(priceStarts <= priceToCompare);
     }
 
     @When("Use size filter")
@@ -53,7 +53,7 @@ public class FiltersSteps {
     @Then("Check if the size is right")
     public void checkIfTheSizeIsRight() {
         String name = categoryPage.getProductsGrid().get(0).findElement(By.className("name")).getText();
-        Assert.assertTrue(name.contains(size));
+        Assertions.assertTrue(name.contains(size));
     }
 
     @When("Use color filter")
@@ -65,7 +65,7 @@ public class FiltersSteps {
     @Then("Check if the color is right")
     public void checkIfTheColorIsRight() {
         String name = categoryPage.getProductsGrid().get(0).findElement(By.className("name")).getText().toUpperCase(Locale.ROOT);
-        Assert.assertTrue(name.contains(color));
+        Assertions.assertTrue(name.contains(color));
     }
 
     @When("Use gender filter")
@@ -76,7 +76,7 @@ public class FiltersSteps {
     @Then("Check if the gender is right")
     public void checkIfTheGenderIsRight() {
         String name = categoryPage.getProductsGrid().get(0).findElement(By.className("name")).getText();
-        Assert.assertTrue(name.contains("Women"));
+        Assertions.assertTrue(name.contains("Women"));
     }
 
     @When("Use collection filter")
@@ -87,7 +87,7 @@ public class FiltersSteps {
 
     @Then("Check if the collection is right")
     public void checkIfTheCollectionIsRight() {
-        Assert.assertTrue(locate("title").getAttribute("text").contains(collectionFilter));
+        Assertions.assertTrue(locate("title").getAttribute("text").contains(collectionFilter));
     }
 
     @When("Use category filter")
@@ -98,7 +98,7 @@ public class FiltersSteps {
 
     @Then("Check if the category is right")
     public void checkIfTheCategoryIsRight() {
-        Assert.assertTrue(locate("title").getAttribute("text").contains(categoryFilter));
+        Assertions.assertTrue(locate("title").getAttribute("text").contains(categoryFilter));
     }
 
     @When("Use Brand filter")
@@ -109,6 +109,6 @@ public class FiltersSteps {
 
     @Then("Check if the Brand is right")
     public void checkIfTheBrandIsRight() {
-        Assert.assertTrue(locate("div.description").getText().contains(brandFilter));
+        Assertions.assertTrue(locate("div.description").getText().contains(brandFilter));
     }
 }
