@@ -29,8 +29,3 @@ Scenario: Filter by category
   Given Open brands page
   When Use category filter
   Then Check if the category is right
-
-Scenario: Filter by Brand
-  Given Open brands page
-  When Use Brand filter
-  Then Check if the Brand is right
