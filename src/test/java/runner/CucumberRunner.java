@@ -30,6 +30,18 @@ public class CucumberRunner {
 
         TestExecutionSummary summary = listener.getSummary();
 
+        System.out.println("TEST RESULTS: ");
+
+        System.out.println(String.format("%s tests were started", summary.getTestsStartedCount()));
+        System.out.println(String.format("%s, tests were successful", summary.getTestsSucceededCount()));
+        System.out.println(String.format("%s, tests failed", summary.getTestsFailedCount()));
+
+        if (summary.getFailures().size() > 0) {
+            for (TestExecutionSummary.Failure failure : summary.getFailures()) {
+                System.out.println(String.format("Test \t %s \t is failed because of %s", failure.getTestIdentifier().getDisplayName(), failure.getException().getMessage()));
+            }
+        }
+
         if (Config.INSTANCE.rerunFailedTests && summary.getFailures().size() > 0) {
             List<UniqueIdSelector> failures = summary.getFailures().stream()
                     .map(TestExecutionSummary.Failure::getTestIdentifier)

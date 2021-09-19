@@ -1,5 +1,6 @@
 Feature: Wishlist feature
 
+#  Bug
   Scenario: Create wishlist
     Given Open wishlist page
     Then Check empty wishlist

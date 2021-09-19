@@ -5,6 +5,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import pages.CategoryPage;
 
+import static guru.qa.core.Core.locate;
 import static guru.qa.core.Core.locateAll;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
@@ -21,6 +22,6 @@ public class PaginationSteps {
 
     @Then("Check if it is a 4th page")
     public void checkIfItIsALastPage() {
-        assertThat(locateAll(".pagination").get(0).findElement(By.className("active"))).containsText("4");
+        assertThat(locate(".pagination .active")).containsText("4");
     }
 }
