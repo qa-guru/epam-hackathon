@@ -9,6 +9,7 @@ repositories {
 
 def junitVersion = "5.8.0"
 def junitPlatformVersion = "1.8.0"
+def cucumberVersion = "6.11.0"
 def mainClass = "guru.qa.bdd.runner.CucumberRunner"
 
 dependencies {
@@ -24,9 +25,9 @@ dependencies {
 
             "org.aeonbits.owner:owner:1.0.12",
             "com.github.javafaker:javafaker:1.0.2",
-            "io.cucumber:cucumber-junit-platform-engine:6.11.0",
-            'io.cucumber:cucumber-java8:6.11.0',
-            'io.cucumber:cucumber-java:6.11.0',
+            "io.cucumber:cucumber-junit-platform-engine:$cucumberVersion",
+            "io.cucumber:cucumber-java8:$cucumberVersion",
+            "io.cucumber:cucumber-java:$cucumberVersion",
             "org.junit.jupiter:junit-jupiter:$junitVersion",
             "org.junit.jupiter:junit-jupiter-engine:$junitVersion",
             "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
