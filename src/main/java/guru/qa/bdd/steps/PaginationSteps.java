@@ -13,7 +13,7 @@ public class PaginationSteps {
 
     private CategoryPage categoryPage = new CategoryPage();
 
-    @When("Go forward 3 guru.qa.bdd.pages page by page")
+    @When("Go forward 3 pages page by page")
     public void goForwardPageByPage() {
         locateAll(".pagination").get(0).findElement(By.className("pagination-next")).click();
         locateAll(".pagination").get(0).findElement(By.className("pagination-next")).click();

@@ -11,9 +11,9 @@ import static guru.qa.core.Core.locateAll;
 public class CategoryMenu {
 
     private final WebElement self = locate(".navigation__overflow");
-    private final ElementList MenuItem1s = locateAll(".nav__links--primary");
+    private final ElementList menuItems = locateAll(".nav__links--primary");
 
     public void navigateTo(MenuItem menuName) {
-        MenuItem1s.findByText(menuName.getDisplayedName()).click();
+        menuItems.findByText(menuName.getDisplayedName()).click();
     }
 }
