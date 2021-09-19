@@ -38,7 +38,7 @@ public class QuickOrderSteps {
     public void resetForm(){
         locate("#js-reset-quick-order-form-btn-bottom").click();
     }
-     */
+    */
 
     @When("^Delete order")
     public void deleteOrder() {

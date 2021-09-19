@@ -3,10 +3,10 @@ package steps;
 import data.FiltersItem;
 import data.MenuItem;
 import guru.qa.core.Core;
+import guru.qa.core.matcher.SimpleElementMatcher;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import pages.CategoryPage;
 import pages.components.CategoryMenu;
@@ -14,16 +14,18 @@ import pages.components.CategoryMenu;
 import java.util.Locale;
 
 import static guru.qa.core.Core.locate;
+import static guru.qa.core.Core.locateAll;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FiltersSteps {
 
-    private final CategoryPage categoryPage = new CategoryPage();
-    int priceStarts;
-    String size;
-    String color;
-    String collectionFilter = "T-Shirts women";
-    String categoryFilter = "Streetwear men";
-    String brandFilter = "Billabong";
+    private CategoryPage categoryPage = new CategoryPage();
+    private int priceStarts;
+    private String size;
+    private String color;
+    private String collectionFilter = "T-Shirts women";
+    private String categoryFilter = "Streetwear men";
+    private String brandFilter = "Billabong";
 
     @Given("Open brands page")
     public void openBrandsPage() {
@@ -40,8 +42,8 @@ public class FiltersSteps {
 
     @Then("Check if the price is right")
     public void checkIfThePriceIsRight() {
-        int priceToCompare = Integer.parseInt(categoryPage.getProductsGrid().get(0).findElement(By.className("price")).getText().substring(1, 3));
-        Assertions.assertTrue(priceStarts <= priceToCompare);
+        int priceToCompare = Integer.parseInt(locateAll(".price").get(0).getText().substring(1, 3));
+        assertThat(priceStarts).isLessThanOrEqualTo(priceToCompare);
     }
 
     @When("Use size filter")
@@ -53,7 +55,7 @@ public class FiltersSteps {
     @Then("Check if the size is right")
     public void checkIfTheSizeIsRight() {
         String name = categoryPage.getProductsGrid().get(0).findElement(By.className("name")).getText();
-        Assertions.assertTrue(name.contains(size));
+        assertThat(name).contains(size);
     }
 
     @When("Use color filter")
@@ -65,7 +67,7 @@ public class FiltersSteps {
     @Then("Check if the color is right")
     public void checkIfTheColorIsRight() {
         String name = categoryPage.getProductsGrid().get(0).findElement(By.className("name")).getText().toUpperCase(Locale.ROOT);
-        Assertions.assertTrue(name.contains(color));
+        assertThat(name).contains(color);
     }
 
     @When("Use gender filter")
@@ -76,7 +78,7 @@ public class FiltersSteps {
     @Then("Check if the gender is right")
     public void checkIfTheGenderIsRight() {
         String name = categoryPage.getProductsGrid().get(0).findElement(By.className("name")).getText();
-        Assertions.assertTrue(name.contains("Women"));
+        assertThat(name).contains("Women");
     }
 
     @When("Use collection filter")
@@ -87,7 +89,7 @@ public class FiltersSteps {
 
     @Then("Check if the collection is right")
     public void checkIfTheCollectionIsRight() {
-        Assertions.assertTrue(locate("title").getAttribute("text").contains(collectionFilter));
+        SimpleElementMatcher.assertThat(locate("title")).hasAttribute("text", collectionFilter);
     }
 
     @When("Use category filter")
@@ -98,17 +100,17 @@ public class FiltersSteps {
 
     @Then("Check if the category is right")
     public void checkIfTheCategoryIsRight() {
-        Assertions.assertTrue(locate("title").getAttribute("text").contains(categoryFilter));
+        SimpleElementMatcher.assertThat(locate("title")).hasAttribute("text", categoryFilter);
     }
 
     @When("Use Brand filter")
     public void useBrandFilter() {
         categoryPage.getFilters().setFilter(FiltersItem.BRAND, brandFilter);
-        categoryPage.getProductsGrid().get(0).findElement(By.tagName("a")).click(); // $("a").click();
+        categoryPage.getProductsGrid().get(0).findElement(By.tagName("a")).click();
     }
 
     @Then("Check if the Brand is right")
     public void checkIfTheBrandIsRight() {
-        Assertions.assertTrue(locate("div.description").getText().contains(brandFilter));
+        SimpleElementMatcher.assertThat(locate("div.description")).containsText(brandFilter);
     }
 }

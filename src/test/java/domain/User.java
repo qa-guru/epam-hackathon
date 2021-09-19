@@ -79,12 +79,9 @@ public class User {
     }
 
     private static class UserTransformer implements TableTransformer<List<User>> {
-
         @Override
         public List<User> transform(DataTable table) {
-
             List<User> users = new ArrayList<>();
-
             table.cells()
                     .stream()
                     .skip(1)        // Skip header row

@@ -92,7 +92,7 @@ public class ProductSteps {
         Review review = reviews.get(0);
         locate("#review\\.headline").sendKeys(review.getTitle());
         locate("#review\\.comment").sendKeys(review.getDescription());
-        locate(String.format("#reviewForm .js-ratingIcon:nth-child(%s)",review.getRate())).click();
+        locate(String.format("#reviewForm .js-ratingIcon:nth-child(%s)", review.getRate())).click();
         locate("#alias").sendKeys(review.getName());
     }
 

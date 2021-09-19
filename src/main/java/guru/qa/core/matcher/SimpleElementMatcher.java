@@ -72,6 +72,13 @@ public class SimpleElementMatcher {
         return this;
     }
 
+    @Nonnull
+    public SimpleElementMatcher hasAttribute(@Nullable String attributeName, @Nullable String expectedValue) {
+        flexCheck(webElement -> org.assertj.core.api.Assertions.assertThat(webElement.getAttribute(attributeName))
+                .contains(expectedValue));
+        return this;
+    }
+
     private void flexCheck(@Nonnull Consumer<WebElement> action) {
         StopWatch stopWatch = StopWatch.createStarted();
         while (stopWatch.getTime() <= Config.INSTANCE.actionTimeout) {

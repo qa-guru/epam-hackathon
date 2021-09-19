@@ -1,6 +1,7 @@
 package data;
 
 public enum MenuItem {
+
     BRANDS("BRANDS"),
     STREETWEAR("STREETWEAR"),
     SNOW("SNOW"),
@@ -17,10 +18,8 @@ public enum MenuItem {
         return displayedName;
     }
 
-
     @Override
     public String toString() {
         return displayedName;
     }
-
 }

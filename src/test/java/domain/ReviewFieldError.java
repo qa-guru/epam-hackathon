@@ -1,6 +1,7 @@
 package domain;
 
 public enum ReviewFieldError {
+
     EMPTY_TITLE("Please enter a title"),
     EMPTY_DESCRIPTION("PLEASE ENTER A DESCRIPTION"),
     NO_RATE("Please enter a rating");

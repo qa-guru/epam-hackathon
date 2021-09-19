@@ -3,11 +3,14 @@ package steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
+import pages.CategoryPage;
 
 import static guru.qa.core.Core.locateAll;
 import static guru.qa.core.matcher.SimpleElementMatcher.assertThat;
 
 public class PaginationSteps {
+
+    private CategoryPage categoryPage = new CategoryPage();
 
     @When("Go forward 3 pages page by page")
     public void goForwardPageByPage() {
@@ -20,6 +23,4 @@ public class PaginationSteps {
     public void checkIfItIsALastPage() {
         assertThat(locateAll(".pagination").get(0).findElement(By.className("active"))).containsText("4");
     }
-
-
 }

@@ -18,6 +18,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static guru.qa.core.Utils.sleep;
@@ -29,6 +30,23 @@ public class ElementList implements List<WebElement> {
 
     public ElementList(By locator) {
         this.locator = locator;
+    }
+
+    private ElementList(List<WebElement> webElements) {
+        locator = null;
+        this.delegate = webElements;
+    }
+
+    public static ElementList wrap(List<WebElement> source) {
+        return new ElementList(source);
+    }
+
+    public WebElement findByText(@Nonnull String text) {
+        return execute(webElements -> {
+            return webElements.stream().filter(webElement -> webElement.getText().contains(text))
+                    .findFirst()
+                    .orElseThrow();
+        });
     }
 
     @Override
@@ -262,7 +280,10 @@ public class ElementList implements List<WebElement> {
 
     private void checkDelegate() {
         if (delegate == null) {
-            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator);
+            delegate = SimpleElementLocator.INSTANCE.findElements(WebDriverContainer.INSTANCE.getRequiredWebDriver(), locator)
+                    .stream()
+                    .map(SimpleElement::wrap)
+                    .collect(Collectors.toList());
         }
     }
 }
