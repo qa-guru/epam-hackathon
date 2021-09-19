@@ -37,6 +37,6 @@ public class LoginSteps {
 
     @Then("Check invalid login data error")
     public void checkInvalidLoginDataError() {
-        assertThat(locate(".global-alerts")).hasText(CommonError.INVALID_LOGIN_DATA.getText());
+        assertThat(locate(".global-alerts")).containsText(CommonError.INVALID_LOGIN_DATA.getText());
     }
 }
